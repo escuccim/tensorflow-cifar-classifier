@@ -18,3 +18,5 @@ The model is a 6-layer convolutional neural network structured as follows:
 12. Logits
 
 The model is created in TensorFlow and includes logging hooks for TensorBoard. I am in the process of training the data with the CIFAR10-50k data set.
+
+The model is currently in a Jupyter notebook. I plan on converting it to .py files after it has been trained.
