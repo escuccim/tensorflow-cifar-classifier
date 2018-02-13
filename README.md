@@ -12,7 +12,9 @@ The model is a 6-layer convolutional neural network structured as follows:
 5. Relu activation
 3. 2x2 Max Pooling Layer
 4. Dropout at 25%
-5. Convolutional Layer 3 - 64 3x3 units (Relu activation)
+5. Convolutional Layer 3 - 64 3x3 units (no activation)
+5. Batch normalization
+6. Relu activation
 6. Convolutional Layer 4 - 64 3x3 units (no activation)
 8. Batch normalization
 9. Relu activation
@@ -24,5 +26,3 @@ The model is a 6-layer convolutional neural network structured as follows:
 12. Logits
 
 The model is created in TensorFlow and includes logging hooks for TensorBoard. I am in the process of training the data with the CIFAR10-50k data set.
-
-The model is currently in a Jupyter notebook. I plan on converting it to .py files after it has been trained.
