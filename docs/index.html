@@ -13,7 +13,266 @@
             <p>By Eric Scuccimarra (skooch@gmail.com)</p>
         </div>
         <div class="col-md-12">
-            
+            <h4>Summary</h4>
+            <hr>
+            <p>I created and tested several convolution neural network models with TensorFlow to classify the CIFAR 10 data. The architecture and results are described below.
+        </div>
+        <div class="col-md-12">
+            <h4>Architectures</h4>
+            <hr>
+            <h5>Model 1</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <ol>
+                        <li>Conv 1
+                        <ol>
+                        <li>64 5x5 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 1 size 3x3 with stride 2
+                        <ol>
+                        <li>Dropout at .125</li>
+                        </ol>
+                        </li>
+                        <li>Conv 2
+                        <ol>
+                        <li>64 5x5 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 2 size 3x3 with stride 2
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Flatten output
+                        <ol>
+                        <li>Dropout at 0.25</li>
+                        </ol>
+                        </li>
+                        <li>Fully connected layer 1 with 384 units
+                        <ol>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Fully connected layer 2 with 192 units
+                        <ol>
+                        <li>Dropout at 0.25</li>
+                        </ol>
+                        </li>
+                        <li>Logits</li>
+                    </ol>
+                </div>
+                <div class="col-md-8">
+                    <img src="model_1.png" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h5>Model 2</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <ol>
+                        <li>Conv 1
+                        <ol>
+                        <li>32 3x3 units with a stride of 2</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Conv 2
+                        <ol>
+                        <li>32 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 1 2x2 with stride of 1
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Conv 3
+                        <ol>
+                        <li>64 3x3 units with stride of 2</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Conv 4
+                        <ol>
+                        <li>64 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 2 3x3 with stride of 2
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Flatten output
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Fully connected layer 1
+                        <ol>
+                        <li>512 units with relu activation</li>
+                        <li>Dropout at 0.25</li>
+                        </ol>
+                        </li>
+                        <li>Logits</li>
+                    </ol>
+                </div>
+                <div class="col-md-8">
+                    <img src="model_2.png" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h5>Model 3</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <ol>
+                        <li>Conv 1
+                        <ol>
+                        <li>32 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Conv 2
+                        <ol>
+                        <li>32 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 1 2x2 with stride of 2
+                        <ol>
+                        <li>Dropout at 0.1</li>
+                        </ol>
+                        </li>
+                        <li>Conv 3
+                        <ol>
+                        <li>64 3x3 units with stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        <li>Dropout at 0.1</li>
+                        </ol>
+                        </li>
+                        <li>Conv 4
+                        <ol>
+                        <li>64 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 2 2x2 with stride of 2</li>
+                        <li>Conv 5
+                        <ol>
+                        <li>128 3x3 units with stride of 1</li>
+                        <li>Relu activation</li>
+                        <li>Dropout at 0.1</li>
+                        </ol>
+                        </li>
+                        <li>Conv 6
+                        <ol>
+                        <li>128 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 3 2x2 with stride of 2</li>
+                        <li>Flatten output
+                        <ol>
+                        <li>Dropout at 0.1</li>
+                        </ol>
+                        </li>
+                        <li>Fully connected layer 1
+                        <ol>
+                        <li>1024 units with relu activation</li>
+                        <li>Dropout at 0.1</li>
+                        </ol>
+                        </li>
+                        <li>Logits</li>
+                    </ol>
+                </div>
+                <div class="col-md-8">
+                    <img src="model_3.png" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h5>Model 4</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <ol>
+                        <li>Conv 1
+                        <ol>
+                        <li>32 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Conv 2
+                        <ol>
+                        <li>32 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 1 2x2 with stride of 1
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Conv 3
+                        <ol>
+                        <li>64 3x3 units with stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Conv 4
+                        <ol>
+                        <li>64 3x3 units with a stride of 1</li>
+                        <li>Batch normalization</li>
+                        <li>Relu activation</li>
+                        </ol>
+                        </li>
+                        <li>Max Pool 2 3x3 with stride of 2
+                        <ol>
+                        <li>Dropout at 0.125</li>
+                        </ol>
+                        </li>
+                        <li>Fully connected layer 1
+                        <ol>
+                        <li>512 units with relu activation</li>
+                        <li>Dropout at 0.25</li>
+                        </ol>
+                        </li>
+                        <li>Logits</li>
+                    </ol>
+                </div>
+                <div class="col-md-8">
+                    <img src="model_4.png" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h4>Training</h4>
+            <hr>
+            <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
+            <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
+            <p>An exponential decay was applied to the learning rate, with the starting learning rate and rate of decay varying by model.
+            <p>The models were each trained for 50 epochs, using a batch size of 64. Metrics were logged to TensorBoard.
+            <p>The results of the models were then compared.
         </div>
     </div>
 </div>
