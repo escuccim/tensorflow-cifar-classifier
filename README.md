@@ -1,8 +1,8 @@
 # TensorFlow CIFAR classifier
 
-A classifier for CIFAR10 data written in TensorFlow.
+Classifiers for CIFAR10 data written in TensorFlow.
 
-In the jupyter notebook I create, train and compare five models for classifying the CIFAR10 data.
+In the jupyter notebook I create, train and compare four models for classifying the CIFAR10 data.
 
 ## Model 1 Architecture
 
