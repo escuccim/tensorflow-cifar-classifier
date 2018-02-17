@@ -15,12 +15,27 @@
         <div class="col-md-12">
             <h4>Summary</h4>
             <hr>
-            <p>I created and tested several convolution neural network models with TensorFlow to classify the CIFAR 10 data. The architecture and results are described below.
+            <p>I created and tested several convolution neural network models with TensorFlow to classify the CIFAR 10 data. The process and results are described below.
         </div>
         <div class="col-md-12">
-            <h4>Architectures</h4>
+            <h4>Models</h4>
+            <hr>
+            <p>I started with four models, which were trained for 50 epochs each. Metrics were logged to TensorBoard.
+            
+        </div>
+        <div class="col-md-12">
+            <h4>Training</h4>
+            <hr>
+            <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
+            <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
+            <p>An exponential decay was applied to the learning rate, with the starting learning rate and rate of decay varying by model.
+            <p>
+        </div>
+        <div class="col-md-12">
+            <h4>Initial Models</h4>
             <hr>
             <h5>Model 1</h5>
+            <p>This is essentially the same model described in the TensorFlow <a href="https://www.tensorflow.org/tutorials/deep_cnn" target="_blank">deep CNN tutorial.</a> A few minor changes have been made.
             <div class="row">
                 <div class="col-md-4">
                     <ol>
@@ -227,7 +242,7 @@
                         <li>Relu activation</li>
                         </ol>
                         </li>
-                        <li>Max Pool 1 2x2 with stride of 1
+                        <li>Max Pool 1 2x2 with stride of 2
                         <ol>
                         <li>Dropout at 0.125</li>
                         </ol>
@@ -246,7 +261,7 @@
                         <li>Relu activation</li>
                         </ol>
                         </li>
-                        <li>Max Pool 2 3x3 with stride of 2
+                        <li>Max Pool 2 2x2 with stride of 2
                         <ol>
                         <li>Dropout at 0.125</li>
                         </ol>
@@ -264,15 +279,6 @@
                     <img src="model_4.png" style="width: 100%;">
                 </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <h4>Training</h4>
-            <hr>
-            <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
-            <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
-            <p>An exponential decay was applied to the learning rate, with the starting learning rate and rate of decay varying by model.
-            <p>The models were each trained for 50 epochs, using a batch size of 64. Metrics were logged to TensorBoard.
-            <p>The results of the models were then compared.
         </div>
     </div>
 </div>
