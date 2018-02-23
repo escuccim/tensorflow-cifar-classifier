@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <h4>Models</h4>
             <hr>
-            <p>I started with four models, which were trained for 50 epochs each. Metrics were logged to TensorBoard.
+            <p>I started with four models, which were trained for 50 epochs each. The models I started with are detailed <a href="#models">below.</a> After training the models the results were compared and the models updated.
             
         </div>
         <div class="col-md-12">
@@ -28,10 +28,11 @@
             <hr>
             <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
             <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
-            <p>An exponential decay was applied to the learning rate, with the starting learning rate and rate of decay varying by model.
+            
             <p>
         </div>
         <div class="col-md-12">
+            <a name="models"></a>
             <h4>Initial Models</h4>
             <hr>
             <h5>Model 1</h5>
