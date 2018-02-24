@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Convolutional Neural Networks with TensorFlow for Classifying CIFAR10 Data</h3>
-            <p>By Eric Scuccimarra (skooch@gmail.com)</p>
+            <p>Eric Scuccimarra (skooch@gmail.com)</p>
         </div>
         <div class="col-md-12">
             <h4>Summary</h4>
@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <h4>Models</h4>
             <hr>
-            <p>I started with four models, which were trained for 50 epochs each. The models I started with are detailed <a href="#models">below.</a> After training the models the results were compared and the models updated.
+            <p>I started with four models, which were trained for 50 epochs each. The initial models are detailed <a href="#models">below.</a> Model 1 was very similar to the model described in the <a href="https://www.tensorflow.org/tutorials/deep_cnn">TensorFlow Deep CNN tutorial</a>, with the local response normalization with batch normalization.
             
         </div>
         <div class="col-md-12">
@@ -28,10 +28,22 @@
             <hr>
             <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
             <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
+            
+            <h4>Model Selection</h4>
             <p>After training the initial models, the results were compared and the models were updated in an attempt to make them perform better. The worst performing models were discarded, and the training process repeated until no significant improvement could be obtained by changing the models.
             <p>A total of about 15 models were tested and evaluated during the process. I ended up with one model which I was not able to improvie upon substantially. At this point I began optimizing that model's hyperparameters to tune the performance.
-            <p>By the time I got to optimizing the model the time required for training on my laptop was prohibitive, so I began training the model on <a href="https://colab.research.google.com">Google CoLaboratory</a> where I was able to train the models in approximately 1/10 of the time required on my laptop. This allowed me to evaluate the performance while tuning hyperparameters including L2 regularization scale and learning rate.
-            
+            <p>By the time I got to optimizing the model the time required for training on my laptop was prohibitive, so I began training the model on <a href="https://colab.research.google.com">Google CoLaboratory</a> where I was able to train the models in approximately 1/10 of the time required on my laptop. 
+            <p>After testing about fifteen models, with several variations of each model also evaluated, an architecture was selected. This is detailed <a href="#final_model">below.</a>
+                   
+            <h4>Optimization</h4>
+            <p>Once an architecture had been selected I proceeded to optimize the hyperparameters, specifically the learning rate and regularization rate. During the model selection process I had tested seven different learning rates before settling on one which was used to compare the models. Now the learning rate was tuned by training the model through 100 epochs and comparing the results.
+            <p>The final learning rate selected was learning rate "f", which was an exponential non-staircase decay:
+            <ul>
+                <li>Starting rate: 0.005
+                <li>Decays every 100 epochs
+                <li>Decays to 0.25
+            </ul>
+            <p>The next hyperparameter to be tuned was the lambda for regularization. To tune this the model was trained through 200 epochs with seven different candidates.
             
             <p>
         </div>
@@ -39,7 +51,7 @@
             <a name="final_model"></a>
             <h4>Final Model</h4>
             <hr>
-            <h5>Model 7.7fr</h5>
+            <h5>Model 7.9.1fr</h5>
             <div class="row">
                 <div class="col-md-4">
                     <ol>
@@ -117,7 +129,7 @@
                         <li>Logits</li>
                         <li>Mean Cross Entropy
                         <li>Loss = mean xentropy + regularization losses
-                        <li>Adam Optimizer
+                        <li>Adam Optimizer minimizing loss
                     </ol>
                 </div>
                 <div class="col-md-8">
@@ -565,6 +577,13 @@
                     <img src="model_4.png" style="width: 100%;">
                 </div>
             </div>
+        </div>
+        <div class="col-md-12">
+            <h4>References and Notes</h4>
+            <ol>
+                <li>Sergey Ioffe, Christian Szegedy, Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (2015)  arXiv:1502.03167v3 [cs.LG], URL <a href="https://arxiv.org/abs/1502.03167">https://arxiv.org/abs/1502.03167</a>
+                <li>Srivastava, et al, Dropout: A Simple Way to Prevent Neural Networks from Overfitting (2014), Journal of Machine Learning Research 15 (2014) 1929-1958, URL <a href="http://www.jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf?utm_content=buffer79b43&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer">http://www.jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf?utm_content=buffer79b43&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer</a>
+            </ol>
         </div>
     </div>
 </div>
