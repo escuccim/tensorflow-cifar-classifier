@@ -18,46 +18,66 @@
             <p>I created and tested several convolution neural network models with TensorFlow to classify the CIFAR 10 data. The process and results are described below.
         </div>
         <div class="col-md-12">
-            <h4>Models</h4>
+            <h4>Initial Models</h4>
             <hr>
-            <p>I started with four models, which were trained for 50 epochs each. The initial models are detailed <a href="#models">below.</a> Model 1 was very similar to the model described in the <a href="https://www.tensorflow.org/tutorials/deep_cnn">TensorFlow Deep CNN tutorial</a>, with the local response normalization with batch normalization.
+            <p>The initial models are detailed <a href="#models">below.</a> Model 1 was very similar to the model described in the <a href="https://www.tensorflow.org/tutorials/deep_cnn">TensorFlow Deep CNN tutorial</a>, with the local response normalization replaced with batch normalization.
             
         </div>
         <div class="col-md-12">
-            <h4>Training</h4>
-            <hr>
-            <p>I used the CIFAR-10 60k data, with 50,000 images used for training and the remaining 10,000 split evenly between validation and test data. The data was downloaded from <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">http://www.cs.toronto.edu/~kriz/cifar.html</a>.
-            <p>The loss function was cross entropy, softmax was used to generate predictions and then the predictions were compared to the labels to determine accuracy.
-            
             <h4>Model Selection</h4>
-            <p>After training the initial models, the results were compared and the models were updated in an attempt to make them perform better. The worst performing models were discarded, and the training process repeated until no significant improvement could be obtained by changing the models.
-            <p>A total of about 15 models were tested and evaluated during the process. I ended up with one model which I was not able to improvie upon substantially. At this point I began optimizing that model's hyperparameters to tune the performance.
-            <p>By the time I got to optimizing the model the time required for training on my laptop was prohibitive, so I began training the model on <a href="https://colab.research.google.com">Google CoLaboratory</a> where I was able to train the models in approximately 1/10 of the time required on my laptop. 
-            <p>After testing about fifteen models, with several variations of each model also evaluated, an architecture was selected. This is detailed <a href="#final_model">below.</a>
-                   
-            <h4>Optimization</h4>
-            <p>Once an architecture had been selected I proceeded to optimize the hyperparameters, specifically the learning rate and regularization rate. During the model selection process I had tested seven different learning rates before settling on one which was used to compare the models. Now the learning rate was tuned by training the model through 100 epochs and comparing the results.
-            <p>The final learning rate selected was learning rate "f", which was an exponential non-staircase decay:
-            <ul>
-                <li>Starting rate: 0.005
-                <li>Decays every 100 epochs
-                <li>Decays to 0.25
-            </ul>
-            <p>The next hyperparameter to be tuned was the lambda for regularization. To tune this the model was trained through 200 epochs with seven different candidates.
+            <p>Each initial model was trained for 50 epochs with the cross entropy, accuracy and loss logged to TensorBoard. The results were compared and the worst two performing models discarded. Elements from the best two performing models were compared to attempt to improve each. This process continued with about a dozen models evaluated and compared before a final one was selected.
             
-            <p>
+            <h4>Optimizing the Model</h4>
+            <p>Once an architecture was selected the long and arduous process of optimizing it began. At this point I ceased training the models on my laptop, where it would take several hours to train through 50 epochs, and started training them on Google CoLaboratory where I could train 150 epochs in the same amount of time. This made it possible to evaluate more models, and a total of about 70 different versions were evaluated.
+            <p>At first changes were made rather haphazardly and the model trained. If the change improved accuracy it was kept, if not the model was reverted to the previous version. Once the test accuracy reached about 90% a more methodical approach was taken where one thing was changed at a time and records were kept of the changes and the performance. 
+            
+            <p>During the optimization process the following items were tuned:
+            <ul>
+                <li>The size of the convolutional filters
+                <li>The size and type of the max pools
+                <li>The type and strength of regularization
+                <li>The learning rate
+            </ul>
+            
+            <p>Among the different techniques evaluated were:
+            <ul>
+                <li>Batch normalization
+                <li>Fractional max pooling
+                <li>Dropout
+                <li>All-convolutional layers
+            </ul>
+            
+            <h4>Best Performing Model</h4>
+            <p>Convolutional filters of size 5x5, 4x4 and 3x3 were evaluated. In the end using a 5x5 filter for the first two convolutional layers and 3x3 for the remaining layers provided the best results.
+            <p>The batch normalization was the most important factor in improving the performance of the network. Adding it to the fully-connected layers provided an immediate, noticeable improvement in both accuracy and speed of learning. It was used after every convolutional and fully connected layer.
+            <p>The fractional max pooling provided a comparatively minor improvement in accuracy, at the expense of increasing the size of the model and a dramatic increase in training time. In the end a fractional max pool with a size of 1.44x1.44 was used to replace the first max pooling layer and normal max pools with a stride of 2 were used for the remaining layers. Using a fractional max pool increased training time by about a factor of 2 and increased the size of the model by about 1.8 while providing about a 2% increase in accuracy.
+            <p>Dropout was also used with a rate of 10% applied to some, but not all, of the convolutional and pooling layers, and a rate of 25% applied to the fully connected layers.
+            
+            <h4>Hyperparameters</h4>
+            <p>L2 regularization was used on all layers, with a lambda of 0.000050 applied to the convolutional layers and a lambda of 0.01 applied to the fully connected layers.
+            <p>The learning rate was also tuned with the goal of decreasing training time to allow more options to be evaluated. The final learning rate was an exponential decay:
+            <ul>
+                <li>Starting Rate:
+                <li>Epochs per Decay:
+                <li>Decay Factor
+                <li>Staircase
+            </ul>
+            
+            <h4>Results</h4>
+            <p>The best result to date is an accuracy of .9127 on the test set and .9231 on the validation set, reached after 326 epochs of training.
+            
         </div>
         <div class="col-md-12">
             <a name="final_model"></a>
             <h4>Final Model</h4>
             <hr>
-            <h5>Model 7.9.1fr</h5>
+            <h5>Model 7.20.2.9j</h5>
             <div class="row">
                 <div class="col-md-4">
                     <ol>
                         <li>Conv 1
                             <ol>
-                                <li>64 5x5 units with a stride of 1</li>
+                                <li>64 5x5 units with a stride of 1 and L2 regularization</li>
                                 <li>Batch normalization</li>
                                 <li>Relu activation</li>
                                 <li>Dropout at 10%</li>
@@ -65,19 +85,19 @@
                         </li>
                         <li>Conv 2
                             <ol>
-                                <li>64 5x5 units with a stride of 1</li>
+                                <li>64 5x5 units with a stride of 1 and L2 regularization</li>
                                 <li>Batch normalization</li>
                                 <li>Relu activation</li>
                             </ol>
                         </li>
-                        <li>Max Pool 1 size 2x2 with stride 2
+                        <li>Fractional Max Pool 1 size 1.44x1.44 
                             <ol>
                                 <li>Dropout at 10%</li>
                             </ol>
                         </li>
                         <li>Conv 3
                             <ol>
-                                <li>96 4x4 units with a stride of 1</li>
+                                <li>96 3x3 units with a stride of 1 and L2 regularization</li>
                                 <li>Batch normalization</li>
                                 <li>Relu activation</li>
                                 <li>Dropout at 10%</li>
@@ -85,19 +105,16 @@
                         </li>
                         <li>Conv 4
                             <ol>
-                                <li>96 4x4 units with a stride of 1</li>
+                                <li>96 3x3 units with a stride of 1 and L2 regularization</li>
                                 <li>Batch normalization</li>
                                 <li>Relu activation</li>
                             </ol>
                         </li>
-                        <li>Max Pool 2 size 2x2 with stride 2
-                            <ol>
-                                <li>Dropout at 10%</li>
-                            </ol>
+                        <li>Max Pool 2 size 3x3 with stride of 2
                         </li>
                         <li>Conv 5
                             <ol>
-                                <li>128 3x3 units with a stride of 1</li>
+                                <li>128 3x3 units with a stride of 1 and L2 regularization</li>
                                 <li>Batch normalization</li>
                                 <li>Relu activation</li>
                                 <li>Dropout at 10%</li>
@@ -110,11 +127,7 @@
                                 <li>Relu activation</li>
                             </ol>
                         </li>
-                        <li>Max Pool 3 size 2x2 with stride 2
-                            <ol>
-                                <li>Dropout at 10%</li>
-                            </ol>
-                        </li>
+                        <li>Max Pool 3 size 2x2 with a stride of 2</li>
                         <li>Flatten output
                             <ol>
                                 <li>Dropout at 10%</li>
@@ -122,209 +135,24 @@
                         </li>
                         <li>Fully connected layer 1 with 1024 units
                             <ol>
+                                <li>Batch normalization
                                 <li>Relu activation
-                                <li>Dropout at 10%
+                                <li>Dropout at 25%
                             </ol>
-                        <li>Fully connected layer 2 with 512 units and relu activation</li>
+                        <li>Fully connected layer 2 with 512 units
+                            <ol>
+                                <li>Batch normalization
+                                <li>Relu activation
+                                <li>Dropout at 25%
+                            </ol>
+                        </li>
                         <li>Logits</li>
-                        <li>Mean Cross Entropy
-                        <li>Loss = mean xentropy + regularization losses
+                        <li>Loss = cross entropy + regularization loss
                         <li>Adam Optimizer minimizing loss
                     </ol>
                 </div>
                 <div class="col-md-8">
-                    <img src="model_1.png" style="width: 100%;">
-                </div>
-            </div>
-        </div>
-            <h5>Model 2</h5>
-            <div class="row">
-                <div class="col-md-4">
-                    <ol>
-                        <li>Conv 1
-                        <ol>
-                        <li>32 3x3 units with a stride of 2</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Conv 2
-                        <ol>
-                        <li>32 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 1 2x2 with stride of 1
-                        <ol>
-                        <li>Dropout at 0.125</li>
-                        </ol>
-                        </li>
-                        <li>Conv 3
-                        <ol>
-                        <li>64 3x3 units with stride of 2</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Conv 4
-                        <ol>
-                        <li>64 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 2 3x3 with stride of 2
-                        <ol>
-                        <li>Dropout at 0.125</li>
-                        </ol>
-                        </li>
-                        <li>Flatten output
-                        <ol>
-                        <li>Dropout at 0.125</li>
-                        </ol>
-                        </li>
-                        <li>Fully connected layer 1
-                        <ol>
-                        <li>512 units with relu activation</li>
-                        <li>Dropout at 0.25</li>
-                        </ol>
-                        </li>
-                        <li>Logits</li>
-                    </ol>
-                </div>
-                <div class="col-md-8">
-                    <img src="model_2.png" style="width: 100%;">
-                </div>
-            </div>
-        </div>
-            <h5>Model 3</h5>
-            <div class="row">
-                <div class="col-md-4">
-                    <ol>
-                        <li>Conv 1
-                        <ol>
-                        <li>32 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Conv 2
-                        <ol>
-                        <li>32 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 1 2x2 with stride of 2
-                        <ol>
-                        <li>Dropout at 0.1</li>
-                        </ol>
-                        </li>
-                        <li>Conv 3
-                        <ol>
-                        <li>64 3x3 units with stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        <li>Dropout at 0.1</li>
-                        </ol>
-                        </li>
-                        <li>Conv 4
-                        <ol>
-                        <li>64 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 2 2x2 with stride of 2</li>
-                        <li>Conv 5
-                        <ol>
-                        <li>128 3x3 units with stride of 1</li>
-                        <li>Relu activation</li>
-                        <li>Dropout at 0.1</li>
-                        </ol>
-                        </li>
-                        <li>Conv 6
-                        <ol>
-                        <li>128 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 3 2x2 with stride of 2</li>
-                        <li>Flatten output
-                        <ol>
-                        <li>Dropout at 0.1</li>
-                        </ol>
-                        </li>
-                        <li>Fully connected layer 1
-                        <ol>
-                        <li>1024 units with relu activation</li>
-                        <li>Dropout at 0.1</li>
-                        </ol>
-                        </li>
-                        <li>Logits</li>
-                    </ol>
-                </div>
-                <div class="col-md-8">
-                    <img src="model_3.png" style="width: 100%;">
-                </div>
-            </div>
-        </div>
-        
-            <h5>Model 4</h5>
-            <div class="row">
-                <div class="col-md-4">
-                    <ol>
-                        <li>Conv 1
-                        <ol>
-                        <li>32 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Conv 2
-                        <ol>
-                        <li>32 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 1 2x2 with stride of 2
-                        <ol>
-                        <li>Dropout at 0.125</li>
-                        </ol>
-                        </li>
-                        <li>Conv 3
-                        <ol>
-                        <li>64 3x3 units with stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Conv 4
-                        <ol>
-                        <li>64 3x3 units with a stride of 1</li>
-                        <li>Batch normalization</li>
-                        <li>Relu activation</li>
-                        </ol>
-                        </li>
-                        <li>Max Pool 2 2x2 with stride of 2
-                        <ol>
-                        <li>Dropout at 0.125</li>
-                        </ol>
-                        </li>
-                        <li>Fully connected layer 1
-                        <ol>
-                        <li>512 units with relu activation</li>
-                        <li>Dropout at 0.25</li>
-                        </ol>
-                        </li>
-                        <li>Logits</li>
-                    </ol>
-                </div>
-                <div class="col-md-8">
-                    <img src="model_4.png" style="width: 100%;">
+                    <img src="model_7.20.0.png" style="width: 100%;">
                 </div>
             </div>
         </div>
@@ -583,6 +411,8 @@
             <ol>
                 <li>Sergey Ioffe, Christian Szegedy, Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (2015)  arXiv:1502.03167v3 [cs.LG], URL <a href="https://arxiv.org/abs/1502.03167">https://arxiv.org/abs/1502.03167</a>
                 <li>Srivastava, et al, Dropout: A Simple Way to Prevent Neural Networks from Overfitting (2014), Journal of Machine Learning Research 15 (2014) 1929-1958, URL <a href="http://www.jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf?utm_content=buffer79b43&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer">http://www.jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf?utm_content=buffer79b43&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer</a>
+                <li>Benjamin Graham, Fractional Max-Pooling (2105) arXiv:1412.6071v4, URL: https://arxiv.org/pdf/1412.6071.pdf
+                <li>Springenberg, et al, Striving for Simplicity: The All Convolutional Net (2015), arXiv:1412.6806v3, URL: https://arxiv.org/pdf/1412.6806.pdf
             </ol>
         </div>
     </div>
