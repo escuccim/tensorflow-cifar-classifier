@@ -25,13 +25,11 @@
         </div>
         <div class="col-md-12">
             <h4>Model Selection</h4>
-            <p>Each initial model was trained for 50 epochs with the cross entropy, accuracy and loss logged to TensorBoard. The results were compared and the worst two performing models discarded. Elements from the best two performing models were compared to attempt to improve each. This process continued with about a dozen models evaluated and compared before a final one was selected.
+            <p>The initial models were evaluated for 50 epochs each and then iteratively improved. The worst performing models were discarded and the best performing models altered to see if their performance could be improved. After evaluating about 70 different models and variations on those models, the final model selected was model_7.20.2.13v-64.
+            <p>It soon became impractical to train the models on my laptop, so I trained them on Google CoLab (https://colab.research.google.com) where the models were trained in about 1/6 of the time it would have taken on my laptop.
             
             <h4>Optimizing the Model</h4>
-            <p>Once an architecture was selected the long and arduous process of optimizing it began. At this point I ceased training the models on my laptop, where it would take several hours to train through 50 epochs, and started training them on Google CoLaboratory where I could train 150 epochs in the same amount of time. This made it possible to evaluate more models, and a total of about 70 different versions were evaluated.
-            <p>At first changes were made rather haphazardly and the model trained. If the change improved accuracy it was kept, if not the model was reverted to the previous version. Once the test accuracy reached about 90% a more methodical approach was taken where one thing was changed at a time and records were kept of the changes and the performance. 
-            
-            <p>During the optimization process the following items were tuned:
+            <p>Once an architecture was selected the process of attempting to optimize it began. During the optimization process the following items were tuned:
             <ul>
                 <li>The size of the convolutional filters
                 <li>The size and type of the max pools
@@ -50,28 +48,29 @@
             <h4>Best Performing Model</h4>
             <p>Convolutional filters of size 5x5, 4x4 and 3x3 were evaluated. In the end using a 5x5 filter for the first two convolutional layers and 3x3 for the remaining layers provided the best results.
             <p>The batch normalization was the most important factor in improving the performance of the network. Adding it to the fully-connected layers provided an immediate, noticeable improvement in both accuracy and speed of learning. It was used after every convolutional and fully connected layer.
-            <p>The fractional max pooling provided a comparatively minor improvement in accuracy, at the expense of increasing the size of the model and a dramatic increase in training time. In the end a fractional max pool with a size of 1.44x1.44 was used to replace the first max pooling layer and normal max pools with a stride of 2 were used for the remaining layers. Using a fractional max pool increased training time by about a factor of 2 and increased the size of the model by about 1.8 while providing about a 2% increase in accuracy.
+            <p>The fractional max pooling provided a comparatively minor improvement in accuracy, at the expense of increasing the size of the model and a dramatic increase in training time. In the end a fractional max pool with a size of 1.44x1.44 was used to replace the first max pooling layer. The second pooling layer was a max pool with a size of 3x3 and a stride of 2, and the last pooling layer was a max pool with size 2x2 and stride 2. Using a fractional max pool increased training time by about a factor of 2 and increased the size of the model by about 1.8 while providing about a 2% increase in accuracy.
             <p>Dropout was also used with a rate of 10% applied to some, but not all, of the convolutional and pooling layers, and a rate of 25% applied to the fully connected layers.
             
             <h4>Hyperparameters</h4>
             <p>L2 regularization was used on all layers, with a lambda of 0.000050 applied to the convolutional layers and a lambda of 0.01 applied to the fully connected layers.
             <p>The learning rate was also tuned with the goal of decreasing training time to allow more options to be evaluated. The final learning rate was an exponential decay:
             <ul>
-                <li>Starting Rate:
-                <li>Epochs per Decay:
-                <li>Decay Factor
-                <li>Staircase
+                <li>Starting Rate: 0.002
+                <li>Epochs per Decay: 10
+                <li>Decay Factor: 0.90
+                <li>Staircase: True
             </ul>
             
             <h4>Results</h4>
-            <p>The best result to date is an accuracy of .9127 on the test set and .9231 on the validation set, reached after 326 epochs of training.
+            <p>The best result to date is an accuracy of .9218 on the test set and .9236 on the validation set, reached after 350 epochs of training.
+            <p>The results of each model were logged in an Excel file which is available in the GitHub repo.
             
         </div>
         <div class="col-md-12">
             <a name="final_model"></a>
             <h4>Final Model</h4>
             <hr>
-            <h5>Model 7.20.2.9j</h5>
+            <h5>Model 7.20.2.13v</h5>
             <div class="row">
                 <div class="col-md-4">
                     <ol>
